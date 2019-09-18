@@ -49,6 +49,15 @@ namespace InventoryApi.Controllers
       }
     }
     // Update Item (PUT)
+    [HttpPut("{id}")]
+
+    public ActionResult<Item> UpdateItem([FromBody]Item entry, int id)
+    {
+      var itemToUpdate = context.Items.FirstOrDefault(item => item.ID == id);
+      context.Items.Update(itemToUpdate);
+      context.SaveChanges();
+      return itemToUpdate;
+    }
 
     // Delete Item (DELETE)
 
