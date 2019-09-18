@@ -60,6 +60,14 @@ namespace InventoryApi.Controllers
     }
 
     // Delete Item (DELETE)
+    [HttpDelete("{id}")]
+    public ActionResult<Item> DeleteItem(int id)
+    {
+      var itemToDelete = context.Items.FirstOrDefault(item => item.ID == id);
+      context.Items.Update(itemToDelete);
+      context.SaveChanges();
+      return itemToDelete;
+    }
 
     // Select Out Of Stock Items (GET)
 
