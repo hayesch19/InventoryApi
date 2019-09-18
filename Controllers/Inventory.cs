@@ -70,7 +70,33 @@ namespace InventoryApi.Controllers
     }
 
     // Select Out Of Stock Items (GET)
+    [HttpGet("outofstock")]
+    public ActionResult GetSOItem()
+    {
+      var item = context.Items.FirstOrDefault(i => i.NumberInStock == 0);
+      if (item == null)
+      {
+        return NotFound();
+      }
+      else
+      {
+        return Ok(item);
+      }
+    }
 
     // Select Items By SKU (GET)
+    [HttpGet("sku/{SKU}")]
+    public ActionResult GetItemSKU(int SKU)
+    {
+      var item = context.Items.FirstOrDefault(i => i.SKU == SKU);
+      if (item == null)
+      {
+        return NotFound();
+      }
+      else
+      {
+        return Ok(item);
+      }
+    }
   }
 }
