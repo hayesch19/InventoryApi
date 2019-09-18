@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using inventoryapi;
 using InventoryApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +17,7 @@ namespace InventoryApi.Controllers
       this.context = _context;
     }
 
+    // Create Item (POST)
     [HttpPost]
     public ActionResult<Item> CreateItem([FromBody]Item entry)
     {
@@ -22,5 +25,35 @@ namespace InventoryApi.Controllers
       context.SaveChanges();
       return entry;
     }
+
+    // Get All Items (GET)
+    [HttpGet]
+    public ActionResult<IEnumerable<Item>> GetAllItems()
+    {
+      var items = context.Items.OrderByDescending(item => item.DateOrdered);
+      return items.ToList();
+    }
+
+    // Get Each Item (GET)
+    [HttpGet("{id}")]
+    public ActionResult GetOneItem(int id)
+    {
+      var item = context.Items.FirstOrDefault(i => i.ID == id);
+      if (item == null)
+      {
+        return NotFound();
+      }
+      else
+      {
+        return Ok(item);
+      }
+    }
+    // Update Item (PUT)
+
+    // Delete Item (DELETE)
+
+    // Select Out Of Stock Items (GET)
+
+    // Select Items By SKU (GET)
   }
 }

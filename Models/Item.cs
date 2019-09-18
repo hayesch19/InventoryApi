@@ -11,7 +11,6 @@ namespace InventoryApi.Models
     public int NumberInStock { get; set; }
     public int Price { get; set; }
     public DateTime DateOrdered { get; set; }
-
   }
 }
 
