@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace InventoryApi.Models
 {
@@ -11,13 +12,9 @@ namespace InventoryApi.Models
     public int NumberInStock { get; set; }
     public int Price { get; set; }
     public DateTime DateOrdered { get; set; }
+
+
+    public List<Locations> Location { get; set; } = new List<Locations>();
+
   }
 }
-
-//  Id
-//  SKU
-//  Name
-//  Short description
-//  NumberInStock
-//  Price
-//  DateOrdered
