@@ -54,17 +54,23 @@ namespace InventoryApi.Controllers
     public ActionResult<Item> UpdateItem([FromBody]Item entry, int id)
     {
       var itemToUpdate = context.Items.FirstOrDefault(item => item.ID == id);
-      context.Items.Update(itemToUpdate);
+      itemToUpdate.SKU = entry.SKU;
+      itemToUpdate.Name = entry.Name;
+      itemToUpdate.ShortDescription = entry.ShortDescription;
+      itemToUpdate.NumberInStock = entry.NumberInStock;
+      itemToUpdate.Price = entry.Price;
+      itemToUpdate.DateOrdered = entry.DateOrdered;
       context.SaveChanges();
       return itemToUpdate;
     }
 
     // Delete Item (DELETE)
     [HttpDelete("{id}")]
-    public ActionResult<Item> DeleteItem(int id)
+    public ActionResult<Item> DeleteEntry([FromBody]Item entry, int id)
+
     {
       var itemToDelete = context.Items.FirstOrDefault(item => item.ID == id);
-      context.Items.Update(itemToDelete);
+      context.Items.Remove(itemToDelete);
       context.SaveChanges();
       return itemToDelete;
     }
@@ -73,7 +79,7 @@ namespace InventoryApi.Controllers
     [HttpGet("outofstock")]
     public ActionResult GetSOItem()
     {
-      var item = context.Items.FirstOrDefault(i => i.NumberInStock == 0);
+      var item = context.Items.Where(i => i.NumberInStock == 0);
       if (item == null)
       {
         return NotFound();
@@ -97,6 +103,7 @@ namespace InventoryApi.Controllers
       {
         return Ok(item);
       }
+
     }
   }
 }
